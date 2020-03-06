@@ -3,10 +3,11 @@ const router = express();
 const mongoose = require("mongoose");
 const Order = require("../models/order");
 const Product = require("../models/product");
+const checkAuth = require("../middleware/checkAuth");
 
 // handling routes for /orders
 
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
     Order.find().select("_id productId quantity").populate("productId", "name price").exec()
         .then(docs => {
             res.status(200).json({

@@ -5,13 +5,14 @@ const mongoose = require("mongoose");
 
 const products = require("./Api/routes/product");
 const orders = require("./Api/routes/order")
-
+const users = require("./Api/routes/user");
 
 const MONGODB_LINK = 'mongodb+srv://dhoop:dhoop@cluster048-naiql.mongodb.net/test?retryWrites=true&w=majority';
 
 mongoose.connect(MONGODB_LINK, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
 })
 
 const app = express();
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/products", products);
 app.use("/orders", orders);
+app.use("/users", users);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
